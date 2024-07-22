@@ -1,0 +1,17 @@
+class Solution {
+public:
+    void parenthes(int n,int open,int close, string s,vector<string>&v){
+        if(open==n && close==n){
+            v.push_back(s);
+            return;
+        }
+        if(open<n)parenthes(n,open+1,close,s+"(",v);
+        if(close<open)parenthes(n,open,close+1,s+")",v);
+
+    }
+    vector<string> generateParenthesis(int n) {
+        vector<string>v;
+        parenthes(n,0,0,"",v);
+        return v;
+    }
+};
