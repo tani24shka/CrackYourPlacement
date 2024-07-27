@@ -1,0 +1,42 @@
+class Solution {
+public:
+    int calculate(string s) {
+       int n = s.size();
+        std::stack<int> numStack; // To store the numbers
+        int currentNumber = 0;
+        char lastSign = '+';
+        
+        for (int i = 0; i < n; ++i) {
+            if (isdigit(s[i])) {
+                currentNumber = currentNumber * 10 + (s[i] - '0');
+            }
+
+            if ((!isdigit(s[i]) && s[i] != ' ') || i == n - 1) {
+                if (lastSign == '+') {
+                    numStack.push(currentNumber);
+                } else if (lastSign == '-') {
+                    numStack.push(-currentNumber);
+                } else if (lastSign == '*') {
+                    int top = numStack.top();
+                    numStack.pop();
+                    numStack.push(top * currentNumber);
+                } else if (lastSign == '/') {
+                    int top = numStack.top();
+                    numStack.pop();
+                    numStack.push(top / currentNumber);
+                }
+                
+                lastSign = s[i];
+                currentNumber = 0;
+            }
+        }
+
+        int result = 0;
+        while (!numStack.empty()) {
+            result += numStack.top();
+            numStack.pop();
+        }
+
+        return result;
+    }
+};
