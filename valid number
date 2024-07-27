@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool isNumber(string s) {
+        int n=s.size();
+       bool isdig=false,eseen=false,dotseen=false;
+       int count=0;
+        for(int i=0;i<s.size();i++){
+            //digit
+        if(isdigit(s[i]))
+                isdig=true;
+                //minus plus
+        else if(s[i]=='+' || s[i]=='-'){
+                if(count==2)return false;
+                if(i>0 && (s[i-1]!='e' && s[i-1]!='E'))
+                    return false;
+                if(i==n-1)return false;
+                    count++;
+            }
+        //dot
+        else if(s[i]=='.'){
+            if(eseen || dotseen)return false;
+            if(i==n-1 && !isdig)return false;
+            dotseen=true;
+        }
+        else if(s[i]=='e' || s[i]=='E'){
+            if(eseen || !isdig || i==n-1)return false;
+            eseen=true;
+        }
+        else 
+        return false;
+        }
+    return true;
+    }
+};
